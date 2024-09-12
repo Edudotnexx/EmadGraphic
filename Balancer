@@ -1,0 +1,346 @@
+{
+  "dns": {
+    "fallbackStrategy": "disabledIfAnyMatch",
+    "hosts": {
+      "dns.google:8.8.8.8": "dns.google:8.8.8.8"
+    },
+    "servers": [
+      {
+        "address": "https://serverless-dns.doustiemadcloud.workers.dev/dns-query",
+        "queryStrategy": "UseIP"
+      }
+    ]
+  },
+  "inbounds": [
+    {
+      "listen": "0.0.0.0",
+      "port": 8118,
+      "protocol": "socks",
+      "settings": {
+        "auth": "noauth",
+        "udp": true
+      },
+      "sniffing": {
+        "destOverride": [
+          "http",
+          "tls",
+          "quic"
+        ],
+        "enabled": true,
+        "metadataOnly": false,
+        "routeOnly": false
+      },
+      "tag": "socks"
+    },
+    {
+      "listen": "0.0.0.0",
+      "port": 9080,
+      "protocol": "http",
+      "settings": {
+        "allowTransparent": true
+      },
+      "sniffing": {
+        "destOverride": [
+          "http",
+          "tls",
+          "quic"
+        ],
+        "enabled": true,
+        "metadataOnly": false,
+        "routeOnly": false
+      },
+      "tag": "http"
+    },
+    {
+      "listen": "0.0.0.0",
+      "port": 6450,
+      "protocol": "dokodemo-door",
+      "settings": {
+        "address": "1.0.0.1",
+        "network": "tcp,udp",
+        "port": 53
+      },
+      "tag": "dns-in"
+    }
+  ],
+  "log": {
+    "loglevel": "error"
+  },
+  "multiObservatory": {
+    "observers": [
+      {
+        "settings": {
+          "enableConcurrency": true,
+          "probeInterval": "300s",
+          "probeUrl": "https://api.telegram.org/robots.txt",
+          "subjectSelector": [
+            "proxy-global-3637",
+            "proxy-global-3638",
+            "proxy-global-3639",
+            "proxy-global-3640"
+          ]
+        },
+        "tag": "observer-proxy"
+      }
+    ]
+  },
+  "outbounds": [
+    {
+      "protocol": "loopback",
+      "settings": {
+        "inboundTag": "socks"
+      }
+    },
+    {
+      "domainStrategy": "AsIs",
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "www.speedtest.net",
+            "port": 443,
+            "users": [
+              {
+                "encryption": "none",
+                "id": "388a05d9-62c1-4e16-ac3f-e33459340e4c"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "sockopt": {
+          "fragment": {
+            "interval": "2-8",
+            "length": "200-300",
+            "packets": "tlshello"
+          }
+        },
+        "tlsSettings": {
+          "alpn": [
+            "http/1.1"
+          ],
+          "serverName": "pages.DeV"
+        },
+        "wsSettings": {
+          "headers": {
+            "Host": "EmaDv2rAY.Pages.Dev"
+          },
+          "path": "/sWAtJIVmKPy7mXdA/NDMuMTMxLjQ5LjI1MA==?ed=2560"
+        }
+      },
+      "tag": "proxy-global-3637"
+    },
+    {
+      "domainStrategy": "AsIs",
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "104.18.8.209",
+            "port": 443,
+            "users": [
+              {
+                "encryption": "none",
+                "id": "388a05d9-62c1-4e16-ac3f-e33459340e4c"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "sockopt": {
+          "fragment": {
+            "interval": "2-8",
+            "length": "200-300",
+            "packets": "tlshello"
+          }
+        },
+        "tlsSettings": {
+          "alpn": [
+            "http/1.1"
+          ],
+          "serverName": "pages.DeV"
+        },
+        "wsSettings": {
+          "headers": {
+            "Host": "EmaDv2rAY.Pages.Dev"
+          },
+          "path": "/sWAtJIVmKPy7mXdA/NDMuMTMxLjQ5LjI1MA==?ed=2560"
+        }
+      },
+      "tag": "proxy-global-3638"
+    },
+    {
+      "domainStrategy": "AsIs",
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "104.16.0.23",
+            "port": 443,
+            "users": [
+              {
+                "encryption": "none",
+                "id": "388a05d9-62c1-4e16-ac3f-e33459340e4c"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "sockopt": {
+          "fragment": {
+            "interval": "2-8",
+            "length": "200-300",
+            "packets": "tlshello"
+          }
+        },
+        "tlsSettings": {
+          "alpn": [
+            "http/1.1"
+          ],
+          "serverName": "PAgEs.dev"
+        },
+        "wsSettings": {
+          "headers": {
+            "Host": "eMAdv2Ray.pageS.dev"
+          },
+          "path": "/u1GZFxnGaZFGFYx4/MTY5LjE5Ny4xMzEuMTk2?ed=2560"
+        }
+      },
+      "tag": "proxy-global-3639"
+    },
+    {
+      "domainStrategy": "AsIs",
+      "protocol": "trojan",
+      "settings": {
+        "servers": [
+          {
+            "address": "www.speedtest.net",
+            "password": "E-Graphic",
+            "port": 443
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "sockopt": {
+          "fragment": {
+            "interval": "2-8",
+            "length": "200-300",
+            "packets": "tlshello"
+          }
+        },
+        "tlsSettings": {
+          "alpn": [
+            "http/1.1"
+          ],
+          "serverName": "pages.dev"
+        },
+        "wsSettings": {
+          "headers": {
+            "Host": "emadtro.pages.dev"
+          },
+          "path": "/proxyip=62.3.12.185"
+        }
+      },
+      "tag": "proxy-global-3640"
+    },
+    {
+      "protocol": "freedom",
+      "tag": "direct"
+    },
+    {
+      "protocol": "freedom",
+      "tag": "bypass"
+    },
+    {
+      "protocol": "blackhole",
+      "tag": "block"
+    },
+    {
+      "protocol": "dns",
+      "proxySettings": {
+        "tag": "proxy-global-3637",
+        "transportLayer": true
+      },
+      "settings": {
+        "address": "1.0.0.1",
+        "network": "tcp",
+        "port": 53,
+        "userLevel": 1
+      },
+      "tag": "dns-out"
+    }
+  ],
+  "policy": {
+    "levels": {
+      "1": {
+        "connIdle": 30
+      }
+    },
+    "system": {
+      "statsOutboundDownlink": true,
+      "statsOutboundUplink": true
+    }
+  },
+  "routing": {
+    "balancers": [
+      {
+        "selector": [
+          "proxy-global-3637",
+          "proxy-global-3638",
+          "proxy-global-3639",
+          "proxy-global-3640"
+        ],
+        "strategy": {
+          "type": "random"
+        },
+        "tag": "balancer-proxy"
+      }
+    ],
+    "domainStrategy": "IPIfNonMatch",
+    "rules": [
+      {
+        "inboundTag": [
+          "dns-in"
+        ],
+        "outboundTag": "dns-out",
+        "type": "field"
+      },
+      {
+        "outboundTag": "dns-out",
+        "protocol": [
+          "dns"
+        ],
+        "type": "field"
+      },
+      {
+        "ip": [
+          "104.16.0.23",
+          "104.18.8.209"
+        ],
+        "outboundTag": "direct",
+        "skipDomain": true,
+        "type": "field"
+      },
+      {
+        "balancerTag": "balancer-proxy",
+        "inboundTag": [
+          "socks",
+          "http"
+        ],
+        "type": "field"
+      }
+    ]
+  },
+  "stats": {}
+}
